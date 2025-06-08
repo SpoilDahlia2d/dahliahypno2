@@ -8,7 +8,7 @@ const imageContainer = document.getElementById("image-container");
 const hypnoTexts = ["OBEY", "RELAX", "WATCH", "SURRENDER", "GOOD TOY"];
 let imagePaths = [];
 
-fetch("static/images.json")
+fetch("/images")
   .then(response => response.json())
   .then(data => {
     imagePaths = data;
