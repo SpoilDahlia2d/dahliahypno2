@@ -34,8 +34,9 @@ body {
 
 .hypno-text {
   position: absolute;
-  top: 10%;
-  width: 100%;
+  top: 50%;
+  width: 50%;
+  transform: translate(-50%,-50%);
   text-align: center;
   font-size: 2rem;
   animation: flash 1s infinite;
