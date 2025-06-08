@@ -17,6 +17,10 @@ fetch("/images")
 startText.addEventListener("click", () => {
   startScreen.style.display = "none";
   hypnoSession.style.display = "block";
+
+  const audio = document.getElementById("voice");
+  audio.play().catch((e) => console.log("Audio play blocked:", e));
+
   startHypnoSession();
 });
 
