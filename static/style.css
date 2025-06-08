@@ -1,84 +1,69 @@
-body {
+body, html {
   margin: 0;
-  background: black;
-  color: white;
-  font-family: sans-serif;
+  padding: 0;
   overflow: hidden;
+  background-color: black;
+  color: fuchsia;
+  font-family: 'Arial Black', sans-serif;
 }
 
 #start-screen {
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: black;
+  background-color: black;
   cursor: pointer;
 }
 
 #start-text {
-  font-size: 3rem;
-  animation: blink 1s infinite;
+  font-size: 2.5rem;
+  text-align: center;
+  animation: flash 1s infinite;
 }
 
-@keyframes blink {
-  0%, 50%, 100% { opacity: 1; }
-  25%, 75% { opacity: 0; }
+@keyframes flash {
+  0% { opacity: 1; }
+  50% { opacity: 0.2; }
+  100% { opacity: 1; }
 }
 
-#hypno-session {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+.spiral {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  background: url('/static/images/spiral.svg') center center no-repeat;
+  background-size: contain;
+  transform: translate(-50%, -50%);
+  animation: spin 1s linear infinite;
+  opacity: 0.4;
+  z-index: 1;
+}
+
+@keyframes spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 .hypno-text {
   position: fixed;
   top: 50%;
-  width: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
+  font-size: 3rem;
   text-align: center;
-  font-size: 4rem;
   animation: flash 1s infinite;
   z-index: 10;
   white-space: nowrap;
   pointer-events: none;
 }
 
-@keyframes flash {
-  0%, 100% { color: white; }
-  50% { color: fuchsia; }
-}
-
-.spiral {
-  background: url('/static/spiral.svg') center center no-repeat;
-  background-size: contain;
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  z-index: 1;
-  opacity: 0.3;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
 #image-container img {
   position: absolute;
-  max-width: 200px;
-  pointer-events: none;
-  z-index: 20;
-}
-
-#final-message {
-  display: none;
-  font-size: 2rem;
-  text-align: center;
-  margin-top: 40vh;
-  color: fuchsia;
-  z-index: 30;
-  position: relative;
+  width: 100px;
+  height: auto;
+  z-index: 5;
 }
