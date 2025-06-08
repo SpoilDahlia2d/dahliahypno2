@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Obey Loop</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="start-screen">
+    <h1 id="start-text">START SESSION</h1>
+  </div>
+  <div id="hypno-session" style="display: none;">
+    <audio id="voice" autoplay loop>
+      <source src="static/voice.mp3" type="audio/mpeg" />
+    </audio>
+    <div class="spiral"></div>
+    <div class="hypno-background"></div>
+    <div id="text-loop" class="hypno-text"></div>
+    <div id="image-container"></div>
+    <div id="final-message">Session complete. You are mine.</div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+
+body {
+  margin: 0;
+  background: black;
+  color: white;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+#start-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  cursor: pointer;
+}
+
+#start-text {
+  font-size: 3em;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.hypno-background {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle, rgba(255,0,255,0.1) 0%, black 100%);
+  background-size: 200% 200%;
+  animation: pulsebg 4s ease-in-out infinite;
+  z-index: 0;
+}
+
+.spiral {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-image: url('static/spiral.svg');
+  background-size: cover;
+  animation: spin 8s linear infinite;
+  opacity: 0.25;
+  z-index: 1;
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes pulsebg {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.hypno-text {
+  position: absolute;
+  top: 40%;
+  width: 100%;
+  text-align: center;
+  font-size: 2em;
+  color: fuchsia;
+  animation: wave 2s infinite;
+  z-index: 2;
+}
+
+@keyframes wave {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.5); opacity: 1; }
+}
+
+#image-container img {
+  position: absolute;
+  max-width: 150px;
+  opacity: 0.5;
+  animation: flash 6s linear infinite;
+  z-index: 3;
+}
+
+@keyframes flash {
+  0% { opacity: 0; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.1); }
+  100% { opacity: 0; transform: scale(1); }
+}
+
+#final-message {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.5em;
+  color: fuchsia;
+  z-index: 4;
+}
