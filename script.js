@@ -1,4 +1,3 @@
-
 const startText = document.getElementById("start-text");
 const startScreen = document.getElementById("start-screen");
 const hypnoSession = document.getElementById("hypno-session");
