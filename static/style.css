@@ -55,7 +55,7 @@ body {
   background-size: contain;
   width: 100vw;
   height: 100vh;
-  position: absolute;
+  position: fixed;
   z-index: 1;
   opacity: 0.3;
   animation: spin 1s linear infinite;
