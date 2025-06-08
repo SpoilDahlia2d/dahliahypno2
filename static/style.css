@@ -2,7 +2,7 @@ body {
   margin: 0;
   background: black;
   color: white;
-  font-family: Arial, sans-serif;
+  font-family: sans-serif;
   overflow: hidden;
 }
 
@@ -11,94 +11,71 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background: black;
   cursor: pointer;
 }
 
 #start-text {
-  font-size: 3em;
+  font-size: 3rem;
   animation: blink 1s infinite;
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
 }
 
-.hypno-background {
-  position: fixed;
+#hypno-session {
+  position: relative;
   width: 100vw;
   height: 100vh;
-  background: radial-gradient(circle, rgba(255,0,255,0.1) 0%, black 100%);
-  background-size: 200% 200%;
-  animation: pulsebg 4s ease-in-out infinite;
-  z-index: 0;
-}
-
-.spiral {
-  position: fixed;
-  width: 300px;
-  height: 300px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-image: url('static/spiral.svg');
-  background-size: cover;
-  animation: spin 8s linear infinite;
-  opacity: 0.25;
-  z-index: 1;
-}
-
-@keyframes spin {
-  0% { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-@keyframes pulsebg {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
+  overflow: hidden;
 }
 
 .hypno-text {
   position: absolute;
-  top: 40%;
+  top: 10%;
   width: 100%;
   text-align: center;
-  font-size: 2em;
-  color: fuchsia;
-  animation: wave 2s infinite;
-  z-index: 2;
+  font-size: 2rem;
+  animation: flash 1s infinite;
+  z-index: 10;
 }
 
-@keyframes wave {
-  0%, 100% { transform: scale(1); opacity: 0.5; }
-  50% { transform: scale(1.5); opacity: 1; }
+@keyframes flash {
+  0%, 100% { color: white; }
+  50% { color: fuchsia; }
+}
+
+.spiral {
+  background: url('/static/spiral.svg') center center no-repeat;
+  background-size: contain;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: 1;
+  opacity: 0.3;
+  animation: spin 10s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 #image-container img {
   position: absolute;
-  max-width: 150px;
-  opacity: 0.5;
-  animation: flash 6s linear infinite;
-  z-index: 3;
-}
-
-@keyframes flash {
-  0% { opacity: 0; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(1.1); }
-  100% { opacity: 0; transform: scale(1); }
+  max-width: 200px;
+  pointer-events: none;
+  z-index: 20;
 }
 
 #final-message {
   display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 2.5em;
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 40vh;
   color: fuchsia;
-  z-index: 4;
+  z-index: 30;
+  position: relative;
 }
