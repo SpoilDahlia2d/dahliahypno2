@@ -1,15 +1,21 @@
+from flask import Flask, render_template, send_from_directory, jsonify
 import os
-import json
 
-# Cartella dove sono le immagini
-image_folder = "static"
+app = Flask(__name__, static_folder='static', template_folder='templates')
 
-# Lista di tutti i file .png con percorso relativo
-images = [os.path.join(image_folder, f).replace("\\", "/") 
-          for f in os.listdir(image_folder) if f.lower().endswith(".png")]
+@app.route('/')
+def home():
+    return render_template('index.html')
 
-# Salva in images.json
-with open(os.path.join(image_folder, "images.json"), "w") as f:
-    json.dump(images, f, indent=2)
+@app.route('/images')
+def get_images():
+    folder = os.path.join(app.static_folder)
+    files = [f'static/{f}' for f in os.listdir(folder) if f.lower().endswith('.png')]
+    return jsonify(files)
 
-print(f"Creato {os.path.join(image_folder, 'images.json')} con {len(images)} immagini.")
+@app.route('/static/<path:filename>')
+def static_files(filename):
+    return send_from_directory('static', filename)
+
+if __name__ == '__main__':
+    app.run(debug=True)
