@@ -25,18 +25,20 @@ startText.addEventListener("click", () => {
 });
 
 function startHypnoSession() {
-  let count = 0;
-  const interval = setInterval(() => {
-    textLoop.textContent = hypnoTexts[count % hypnoTexts.length];
-    spawnImage();
-    count++;
-    if (count > 45) {
-      clearInterval(interval);
-      textLoop.textContent = "";
-      finalMessage.style.display = "block";
-    }
-  }, 2000);
-}
+  const phrases = [
+  "OBEY", "SUBMIT", "YOU ARE MINE", "RELAX", "SURRENDER", "LET GO", "GOOD PET"
+];
+
+setInterval(() => {
+  const text = document.createElement("div");
+  text.className = "hypno-text";
+  text.textContent = phrases[Math.floor(Math.random() * phrases.length)];
+  hypnoSession.appendChild(text);
+
+  setTimeout(() => {
+    hypnoSession.removeChild(text);
+  }, 1500);
+}, 1300);
 
 function spawnImage() {
   if (imagePaths.length === 0) return;
