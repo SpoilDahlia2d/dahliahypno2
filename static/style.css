@@ -1,120 +1,75 @@
-/* Sfondo nero con effetto fucsia */
 body {
   margin: 0;
-  padding: 0;
-  background-color: black;
   overflow: hidden;
+  background: black;
   font-family: 'Arial', sans-serif;
-  color: fuchsia;
 }
 
-/* Spirale ipnotica */
 .spiral {
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 300px;
-  height: 300px;
-  background: url('/static/images/spiral.svg') center center no-repeat;
-  background-size: contain;
+  width: 100vmin;
+  height: 100vmin;
+  background: url('/static/images/spiral.png') no-repeat center center;
+  background-size: cover;
   transform: translate(-50%, -50%);
-  animation: spin 0.8s linear infinite, pulse 2s ease-in-out infinite;
+  animation: spin 2s linear infinite;
   z-index: 1;
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
-/* Animazione rotazione spirale */
 @keyframes spin {
   0% { transform: translate(-50%, -50%) rotate(0deg); }
   100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-/* Effetto pulsazione */
-@keyframes pulse {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.1); opacity: 0.6; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-/* Testo ipnotico centrale */
 .hypno-text {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 3rem;
-  text-align: center;
-  animation: flashText 1.2s infinite;
-  z-index: 10;
-  white-space: nowrap;
-  pointer-events: none;
+  font-size: 7vw;
+  color: #ff00ff;
+  z-index: 3;
+  text-shadow: 0 0 15px #ff00ff;
+  animation: glowText 1s ease-in-out infinite alternate;
 }
 
-/* Effetto flash del testo */
-@keyframes flashText {
-  0%   { opacity: 1; }
-  50%  { opacity: 0.1; }
-  100% { opacity: 1; }
+@keyframes glowText {
+  from { text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff; }
+  to { text-shadow: 0 0 20px #ff00ff, 0 0 30px #ff00ff; }
 }
 
-/* Testo iniziale */
 #start-text {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 2.5rem;
+  font-size: 8vw;
   color: white;
-  z-index: 20;
+  z-index: 4;
   cursor: pointer;
-  text-shadow: 0 0 10px fuchsia, 0 0 20px fuchsia;
+  animation: pulse 1s infinite alternate;
 }
 
-/* Container immagini popup */
-#image-container img {
-  position: fixed;
-  width: 100px;
-  z-index: 100;
-  pointer-events: none;
+@keyframes pulse {
+  from { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
 }
 
-/* Flash dello schermo */
-@keyframes screenFlash {
-  0% { background-color: rgba(255, 0, 255, 0.2); }
-  50% { background-color: rgba(255, 0, 255, 0.6); }
-  100% { background-color: rgba(255, 0, 255, 0.2); }
+.flashing {
+  animation: flashBg 0.4s infinite alternate;
 }
 
-body.flashing {
-  animation: screenFlash 0.3s ease-in-out infinite;
+@keyframes flashBg {
+  from { background-color: black; }
+  to { background-color: #330033; }
 }
 
-/* Vignetta oscura ai bordi */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  box-shadow: inset 0 0 200px black;
-  z-index: 5;
-  pointer-events: none;
-}
-
-/* Responsive: adattamento per smartphone */
-@media (max-width: 768px) {
-  .spiral {
-    width: 200px;
-    height: 200px;
-  }
-
-  .hypno-text {
-    font-size: 1.8rem;
-  }
-
-  #start-text {
-    font-size: 2rem;
-  }
-
-  #image-container img {
-    width: 70px;
-  }
+img {
+  position: absolute;
+  width: 25vmin;
+  height: auto;
+  z-index: 2;
 }
