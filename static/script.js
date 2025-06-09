@@ -5,46 +5,42 @@ const imageContainer = document.getElementById("image-container");
 const audio = document.getElementById("voice");
 
 const phrases = [
-  "OBEY", "SUBMIT", "RELAX", "YOU ARE MINE", "SURRENDER", "GOOD PET", "LET GO"
+  "OBEY", "SUBMIT", "SURRENDER", "GOOD PET", "YOU ARE MINE", "LET GO"
 ];
 
-// Al click su "Click to Obey"
+const imageExtensions = ["png", "jpg", "jpeg", "webp"];
+
 startText.addEventListener("click", () => {
   startScreen.style.display = "none";
   hypnoSession.style.display = "block";
 
   // Prova ad avviare l'audio
-  audio.play().catch((e) => console.warn("Audio non avviato:", e));
+  audio.play().catch(() => {});
 
   startHypnoSession();
 });
 
 function startHypnoSession() {
-  // Frasi ipnotiche al centro
+  // Testo ipnotico al centro
   setInterval(() => {
     const text = document.createElement("div");
     text.className = "hypno-text";
     text.textContent = phrases[Math.floor(Math.random() * phrases.length)];
     hypnoSession.appendChild(text);
 
-    setTimeout(() => {
-      text.remove(); // rimuove dopo 1.5 secondi
-    }, 1500);
-  }, 1300);
+    setTimeout(() => text.remove(), 1500);
+  }, 1200);
 
-  // Mostra immagini random popup da /static/images/
+  // Mostra immagini popup random da cartella
   setInterval(() => {
+    const ext = imageExtensions[Math.floor(Math.random() * imageExtensions.length)];
+    const randomNum = Math.floor(Math.random() * 9999);
     const img = document.createElement("img");
-    const randomId = Math.floor(Math.random() * 100000);
-    const extensions = ["png", "jpg", "jpeg", "webp"];
-    const ext = extensions[Math.floor(Math.random() * extensions.length)];
-    img.src = `/static/images/${randomId}.${ext}`;
+    img.src = `/static/images/${randomNum}.${ext}`;
     img.style.top = `${Math.random() * 80 + 10}%`;
     img.style.left = `${Math.random() * 80 + 10}%`;
     imageContainer.appendChild(img);
 
-    setTimeout(() => {
-      img.remove();
-    }, 2000);
+    setTimeout(() => img.remove(), 2000);
   }, 1000);
 }
