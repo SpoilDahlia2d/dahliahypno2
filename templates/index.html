@@ -6,11 +6,16 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <img id="spiral" src="{{ url_for('static', filename='images/spiral.png') }}" alt="spirale">
+  <img id="spiral" src="{{ url_for('static', filename='images/spirale.png') }}" alt="spirale" hidden>
   
-  <div id="text-container">Empty your mind</div>
+  <div id="intro-text">
+    <h1>CLICK</h1>
+    <p>to become obsessed with DAHLIA</p>
+  </div>
 
-  <audio id="audio" src="{{ url_for('static', filename='audio/voice.mp3') }}"></audio>
+  <div id="text-container" hidden>Empty your mind</div>
+
+  <audio id="audio" src="{{ url_for('static', filename='audio/hypno.mp3') }}"></audio>
 
   <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
