@@ -5,42 +5,54 @@ const imageContainer = document.getElementById("image-container");
 const audio = document.getElementById("voice");
 
 const phrases = [
-  "OBEY", "SUBMIT", "SURRENDER", "GOOD PET", "YOU ARE MINE", "LET GO"
+  "OBEY", "SUBMIT", "SURRENDER", "GOOD PET", "YOU ARE MINE"
 ];
 
-const imageExtensions = ["png", "jpg", "jpeg", "webp"];
+let imagePaths = [];
+let activeTexts = [];
+
+fetch('/images')
+  .then(res => res.json())
+  .then(data => {
+    imagePaths = data;
+  });
 
 startText.addEventListener("click", () => {
   startScreen.style.display = "none";
   hypnoSession.style.display = "block";
-
-  // Prova ad avviare l'audio
   audio.play().catch(() => {});
-
   startHypnoSession();
 });
 
+function showPhrase() {
+  if (activeTexts.length >= 2) {
+    const old = activeTexts.shift();
+    old.remove();
+  }
+
+  const text = document.createElement("div");
+  text.className = "hypno-text";
+  text.textContent = phrases[Math.floor(Math.random() * phrases.length)];
+  hypnoSession.appendChild(text);
+  activeTexts.push(text);
+
+  setTimeout(() => {
+    text.remove();
+    activeTexts = activeTexts.filter(t => t !== text);
+  }, 1500);
+}
+
+function showRandomImage() {
+  if (imagePaths.length === 0) return;
+  const img = document.createElement("img");
+  img.src = imagePaths[Math.floor(Math.random() * imagePaths.length)];
+  img.style.top = `${Math.random() * 80 + 10}%`;
+  img.style.left = `${Math.random() * 80 + 10}%`;
+  imageContainer.appendChild(img);
+  setTimeout(() => img.remove(), 2000);
+}
+
 function startHypnoSession() {
-  // Testo ipnotico al centro
-  setInterval(() => {
-    const text = document.createElement("div");
-    text.className = "hypno-text";
-    text.textContent = phrases[Math.floor(Math.random() * phrases.length)];
-    hypnoSession.appendChild(text);
-
-    setTimeout(() => text.remove(), 1500);
-  }, 1200);
-
-  // Mostra immagini popup random da cartella
-  setInterval(() => {
-    const ext = imageExtensions[Math.floor(Math.random() * imageExtensions.length)];
-    const randomNum = Math.floor(Math.random() * 9999);
-    const img = document.createElement("img");
-    img.src = `/static/images/${randomNum}.${ext}`;
-    img.style.top = `${Math.random() * 80 + 10}%`;
-    img.style.left = `${Math.random() * 80 + 10}%`;
-    imageContainer.appendChild(img);
-
-    setTimeout(() => img.remove(), 2000);
-  }, 1000);
+  setInterval(showPhrase, 1200);
+  setInterval(showRandomImage, 1000);
 }
