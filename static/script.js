@@ -1,70 +1,35 @@
-let audioStarted = false;
-let hypnoTexts = [
-  "Obey", "You belong to me", "No control", "Sink deeper",
-  "Empty your mind", "Just feel", "Let go", "I'm all you need"
-];
-let imagePaths = [];
-let currentTextIndex = 0;
-
-// Carica immagini da /images
-fetch('/images')
-  .then(res => res.json())
-  .then(data => {
-    imagePaths = data;
-    console.log("Immagini caricate:", imagePaths);
-  });
-
-function playAudioOnce() {
-  if (!audioStarted) {
-    const audio = new Audio("/static/audio/voice.mp3");
-    audio.loop = true;
-    audio.play().catch(err => {
-      console.log("Autoplay bloccato, serve interazione.");
-    });
-    audioStarted = true;
+document.body.addEventListener("click", () => {
+  const audio = document.getElementById("audio");
+  if (audio.paused) {
+    audio.play();
   }
-}
+
+  // Avvio immagine popup ogni 2s
+  setInterval(showRandomImage, 2000);
+
+  // Cambia scritta ipnotica ogni 3s
+  const texts = ["Empty your mind", "You belong to me", "Don't resist", "Obey", "Let go", "I'm all you need"];
+  let index = 0;
+  setInterval(() => {
+    const container = document.getElementById("text-container");
+    container.innerText = texts[index];
+    index = (index + 1) % texts.length;
+  }, 3000);
+});
 
 function showRandomImage() {
-  if (imagePaths.length === 0) return;
-  const img = document.createElement("img");
-  img.src = imagePaths[Math.floor(Math.random() * imagePaths.length)];
-  img.style.top = Math.random() * 80 + "%";
-  img.style.left = Math.random() * 80 + "%";
-  document.getElementById("image-container").appendChild(img);
+  fetch("/images")  // chiama la route Flask
+    .then(res => res.json())
+    .then(images => {
+      if (images.length === 0) return;
 
-  setTimeout(() => {
-    img.remove();
-  }, 2000);
+      const img = document.createElement("img");
+      img.src = "/static/images/" + images[Math.floor(Math.random() * images.length)];
+      img.className = "popup-image";
+      img.style.top = Math.random() * 80 + "%";
+      img.style.left = Math.random() * 80 + "%";
+      document.body.appendChild(img);
+
+      setTimeout(() => img.remove(), 3000);
+    });
 }
-
-function showNextHypnoText() {
-  const existing = document.querySelector(".hypno-text");
-  if (existing) existing.remove();
-
-  const text = document.createElement("div");
-  text.className = "hypno-text";
-  text.innerText = hypnoTexts[currentTextIndex];
-  document.body.appendChild(text);
-
-  currentTextIndex = (currentTextIndex + 1) % hypnoTexts.length;
-
-  setTimeout(() => text.remove(), 2000);
-}
-
-function startSession() {
-  document.getElementById("start-text").style.display = "none";
-  document.body.classList.add("flashing");
-
-  const spiral = document.createElement("div");
-  spiral.className = "spiral";
-  document.body.appendChild(spiral);
-
-  playAudioOnce();
-
-  setInterval(showRandomImage, 800);
-  setInterval(showNextHypnoText, 1800);
-}
-
-// Avvio con click
-document.getElementById("start-text").addEventListener("click", startSession);
