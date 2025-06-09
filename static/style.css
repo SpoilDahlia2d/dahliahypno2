@@ -1,73 +1,85 @@
-body, html {
+body {
   margin: 0;
-  padding: 0;
   background: black;
   overflow: hidden;
-  font-family: 'Arial', sans-serif;
-  height: 100%;
+  font-family: Arial, sans-serif;
+  color: #f0f;
 }
 
 #spiral {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 200vmax;
+  height: 200vmax;
+  transform: translate(-50%, -50%) rotate(0deg);
+  animation: spin 30s linear infinite;
+  z-index: 0;
+}
+
+@keyframes spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+#start-screen {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  object-fit: cover;
-  z-index: -1;
-  animation: rotate 60s linear infinite;
-  transform-origin: center center;
+  background: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
 }
 
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+#start-button {
+  font-size: 3em;
+  color: #f0f;
+  background: transparent;
+  border: 2px solid #f0f;
+  padding: 10px 30px;
+  cursor: pointer;
 }
 
-.hypno-text {
-  position: absolute;
+#start-text {
+  color: #f0f;
+  font-size: 1.5em;
+  margin-top: 10px;
+}
+
+#text-container {
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #ff00ff;
-  font-size: 5vw;
-  text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
-  opacity: 0;
-  animation: showText 6s infinite;
+  color: #f0f;
+  font-size: 3em;
+  text-align: center;
+  z-index: 3;
+  text-shadow: 0 0 20px #f0f, 0 0 40px #f0f;
+  animation: glow 1s ease-in-out infinite alternate;
 }
 
-@keyframes showText {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
-  25% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-  75% { opacity: 1; }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.1); }
+@keyframes glow {
+  from { opacity: 0.8; }
+  to { opacity: 1; }
 }
 
-.popup-image {
+.popup-img {
   position: fixed;
-  max-width: 50vw;
-  max-height: 50vh;
-  z-index: 1000;
-  border: 2px solid #ff00ff;
-  box-shadow: 0 0 20px #ff00ff;
+  max-width: 60vw;
+  max-height: 60vh;
+  z-index: 4;
+  animation: popupFade 3s ease-in-out forwards;
   pointer-events: none;
-  animation: fadePopup 2s ease-in-out;
 }
 
-@keyframes fadePopup {
+@keyframes popupFade {
   0% { opacity: 0; transform: scale(0.8); }
-  20% { opacity: 1; transform: scale(1); }
-  80% { opacity: 1; }
-  100% { opacity: 0; transform: scale(1.1); }
-}
-
-@media screen and (max-width: 600px) {
-  .popup-image {
-    max-width: 80vw;
-    max-height: 70vh;
-  }
-
-  .hypno-text {
-    font-size: 8vw;
-  }
+  50% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.2); }
 }
