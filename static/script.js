@@ -1,24 +1,29 @@
 document.body.addEventListener("click", () => {
+  const intro = document.getElementById("intro-text");
+  const spiral = document.getElementById("spiral");
+  const text = document.getElementById("text-container");
   const audio = document.getElementById("audio");
-  if (audio.paused) {
-    audio.play();
-  }
 
-  // Avvio immagine popup ogni 2s
+  if (intro) intro.remove();
+  spiral.hidden = false;
+  text.hidden = false;
+
+  audio.play();
+
+  // Avvia loop immagine ipnotica
   setInterval(showRandomImage, 2000);
 
-  // Cambia scritta ipnotica ogni 3s
-  const texts = ["Empty your mind", "You belong to me", "Don't resist", "Obey", "Let go", "I'm all you need"];
+  // Frasi ipnotiche a rotazione
+  const texts = ["Empty your mind", "You belong to me", "Don’t resist", "Obey", "Let go"];
   let index = 0;
   setInterval(() => {
-    const container = document.getElementById("text-container");
-    container.innerText = texts[index];
+    text.innerText = texts[index];
     index = (index + 1) % texts.length;
   }, 3000);
 });
 
 function showRandomImage() {
-  fetch("/images")  // chiama la route Flask
+  fetch("/images")
     .then(res => res.json())
     .then(images => {
       if (images.length === 0) return;
