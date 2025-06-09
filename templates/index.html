@@ -1,43 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Obey Loop</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <img id="spiral" src="{{ url_for('static', filename='background/spirale.png') }}" alt="Spiral" />
-  
-  <div class="hypno-text" id="text1">Empty your mind</div>
-  <div class="hypno-text" id="text2" style="animation-delay: 3s;">Obey</div>
+  <div id="start-screen">
+    <button id="start-button">CLICK</button>
+    <p id="start-text">to become obsessed with DAHLIA</p>
+  </div>
 
-  <audio id="audio" src="{{ url_for('static', filename='audio/voice.mp3') }}" loop></audio>
+  <div id="main-content" style="display: none;">
+    <img src="{{ url_for('static', filename='spiral.png') }}" id="spiral" />
+    <div id="text-container"></div>
+    <audio id="hypno-audio" src="{{ url_for('static', filename='audio/hypno.mp3') }}" loop></audio>
+  </div>
 
-  <script>
-    const audio = document.getElementById('audio');
-    document.body.addEventListener('click', () => {
-      if (audio.paused) audio.play();
-    });
-
-    function showPopupImage(url) {
-      const img = document.createElement('img');
-      img.src = url;
-      img.className = 'popup-image';
-      img.style.top = `${Math.random() * 70 + 10}vh`;
-      img.style.left = `${Math.random() * 70 + 10}vw`;
-      document.body.appendChild(img);
-      setTimeout(() => img.remove(), 3000);
-    }
-
-    fetch('/images')
-      .then(res => res.json())
-      .then(images => {
-        setInterval(() => {
-          const random = Math.floor(Math.random() * images.length);
-          showPopupImage(images[random]);
-        }, 2000);
-      });
-  </script>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
