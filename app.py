@@ -1,21 +1,22 @@
-from flask import Flask, render_template, send_from_directory, jsonify
+from flask import Flask, render_template, jsonify
 import os
 
-app = Flask(__name__, static_folder='static', template_folder='templates')
+app = Flask(__name__)
 
 @app.route('/')
-def home():
+def index():
     return render_template('index.html')
 
 @app.route('/images')
 def get_images():
-    folder = os.path.join(app.static_folder)
-    files = [f'static/{f}' for f in os.listdir(folder) if f.lower().endswith('.png')]
-    return jsonify(files)
-
-@app.route('/static/<path:filename>')
-def static_files(filename):
-    return send_from_directory('static', filename)
+    folder = os.path.join(app.static_folder, 'images')
+    allowed_exts = ('.png', '.jpg', '.jpeg', '.webp')
+    images = [
+        f'/static/images/{filename}'
+        for filename in os.listdir(folder)
+        if filename.lower().endswith(allowed_exts)
+    ]
+    return jsonify(images)
 
 if __name__ == '__main__':
     app.run(debug=True)
