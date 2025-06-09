@@ -1,24 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Obey Loop</title>
-  <link rel="stylesheet" href="/static/style.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <div id="start-screen">
-    <div id="start-text">CLICK TO OBEY</div>
-  </div>
+  <img id="spiral" src="{{ url_for('static', filename='images/spirale.png') }}" alt="spirale">
+  
+  <div id="text-container">Empty your mind</div>
 
-  <div id="hypno-session" style="display:none;">
-    <div class="spiral"></div>
-    <div id="image-container"></div>
-    <audio id="voice" loop>
-      <source src="/static/audio/voice.mp3" type="audio/mpeg" />
-    </audio>
-  </div>
+  <audio id="audio" src="{{ url_for('static', filename='audio/voice.mp3') }}"></audio>
 
-  <script src="/static/script.js"></script>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
